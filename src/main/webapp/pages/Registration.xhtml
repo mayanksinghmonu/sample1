@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Registration Page</title>
+	<link type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/style.css"
+		rel="stylesheet" />
+	<link type="image/x-icon"
+		href="${facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"
+		rel="shortcut icon" />
+
+	<style type="text/css">
+button.ui-button {
+	margin-right: .5rem;
+}
+</style>
+</h:head>
+
+<h:body>
+
+
+	<h:form id="loginForm">
+		<p:growl id="msg" showDetail="true" />
+		<h:panelGrid id="loginPanel" columns="2">
+			<h:outputText value="User Name" />
+			<p:inputText id="firstName"
+				value="#{RegistrationController.user.userName}"></p:inputText>
+			<h:outputText value="Password" />
+			<p:password id="password"
+				value="#{RegistrationController.user.password}"
+				redisplay="true"></p:password>
+			<h:outputText value="email Id" />
+			<p:inputText id="emailId"
+				value="#{RegistrationController.user.emailId}"></p:inputText>
+			<h:outputText value="mobile No" />
+			<p:inputText id="mobileNo"
+				value="#{RegistrationController.user.mobileNo}"></p:inputText>
+
+			<p:commandButton id="SignUp"  update=":loginForm:radioDT" 
+				action="#{RegistrationController.submit}" value="Sign Up"
+				style="float: right;">
+			</p:commandButton>
+			<p:commandButton id="delete" delete="loginForm" update=":loginForm:radioDT"
+				action="#{RegistrationController.delete}" value="delete"
+				style="float: right;">
+			</p:commandButton>
+		</h:panelGrid>
+
+		<div class="card">
+			<p:dataTable id="radioDT" var="user"
+				value="#{RegistrationController.regUsersList}"
+				selection="#{RegistrationController.selUser}"
+				rowKey="#{user.userId}" paginator="true" rows="5">
+
+
+
+
+				<p:column selectionMode="single"
+					style="width:16px;text-align:center" />
+
+
+				<p:column headerText="User Name">
+					<h:outputText value="#{user.userName}" />
+				</p:column>
+
+				<p:column headerText="Password">
+					<h:outputText value="#{user.password}" />
+				</p:column>
+
+				<p:column headerText="email Id">
+					<h:outputText value="#{user.emailId}" />
+				</p:column>
+
+				<p:column headerText="mobile No">
+					<h:outputText value="#{user.mobileNo}" />
+				</p:column>
+
+			</p:dataTable>
+		</div>
+
+	</h:form>
+</h:body>
+</html>

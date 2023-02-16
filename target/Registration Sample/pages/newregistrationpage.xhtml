@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>new registration</title>
+	<link type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/style.css"
+		rel="stylesheet" />
+	<link type="image/x-icon"
+		href="${facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"
+		rel="shortcut icon" />
+</h:head>
+
+<h:body>
+
+
+	<h:form id="rigistation_pages">
+
+		<table align="center">
+			<tr>
+				<td><h:outputLabel for="username">User Name</h:outputLabel></td>
+				<td><h:inputText id="name-id"
+						value="#{newregistraionpage.object_of_dao.name}" /></td>
+			</tr>
+
+			<tr>
+				<td><h:outputLabel for="password">Password</h:outputLabel></td>
+				<td><h:inputSecret id="password-id"
+						value="#{newregistraionpage.object_of_dao.password}" /></td>
+			</tr>
+
+			<tr>
+				<td><h:outputLabel for="email">Your Email</h:outputLabel></td>
+				<td><h:inputText id="email-id"
+						value="#{newregistraionpage.object_of_dao.email}" /></td>
+			</tr>
+
+			<tr>
+				<td><h:outputLabel for="mobile number">Your  mobile number</h:outputLabel></td>
+				<td><h:inputText id="mobile-number"
+						value="#{newregistraionpage.object_of_dao.mobile}" /></td>
+			</tr>
+
+
+			<tr>
+				<td><h:outputLabel for="address">Address</h:outputLabel></td>
+				<td><h:inputTextarea value="#{newregistraionpage.object_of_dao.address}"
+						cols="21" rows="5" /></td>
+			</tr>
+
+			<tr>
+				<td><h:commandButton value="sign-up" action="#{newregistraionpage.submit}"></h:commandButton></td>
+
+			</tr>
+
+			
+		</table>
+
+
+
+
+	</h:form>
+</h:body>
+</html>

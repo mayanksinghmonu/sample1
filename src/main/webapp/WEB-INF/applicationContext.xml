@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd
+	    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<context:component-scan base-package="com.celstra.*" />
+	
+	<context:annotation-config />
+	<context:spring-configured />
+
+	<context:property-placeholder location="/WEB-INF/jdbc.properties" />
+
+
+	<!-- Data Source Declaration -->
+	<bean id="DataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.databaseurl}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		
+	</bean>
+
+
+
+	<!-- Session Factory Declaration -->
+	<bean id="SessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="DataSource" />
+		<property name="configLocation">
+			<value>classpath:hibernate1.cfg.xml</value>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.connection.pool_size">50</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<!-- Enable Hibernate's automatic session context management -->
+				<prop key="current_session_context_class">thread</prop>
+				<prop key="hibernate.connection.release_mode">after_transaction</prop>
+				<!-- Disable the second-level cache -->
+				<!-- <prop key="cache.provider_class">org.hibernate.cache.NoCacheProvider</prop> -->
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.internal.SingletonEhcacheRegionFactory</prop>
+				<prop key="cache.provider_class">net.sf.ehcache.hibernate.EhCacheProvider</prop>
+				
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.id.new_generator_mappings">false</prop>
+
+				<!-- c3p0 connection poo -->
+				<!-- <prop key="hibernate.connection.provider_class"> org.hibernate.c3p0.internal.C3P0ConnectionProvider 
+					</prop> <prop key="hibernate.c3p0.min_size">10</prop> <prop key="hibernate.c3p0.max_size">50</prop> 
+					<prop key="hibernate.c3p0.timeout">100</prop> <prop key="hibernate.c3p0.max_statements">50</prop> 
+					<prop key="hibernate.c3p0.idle_test_period">500</prop> -->
+
+
+			</props>
+		</property>
+	</bean>
+
+	<tx:annotation-driven transaction-manager="txManager" />
+	<!-- Transaction Manager is defined -->
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="SessionFactory" />
+	</bean>
+
+	
+</beans>
